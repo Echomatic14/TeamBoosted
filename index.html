@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#080a0d">
+  <meta name="description" content="Team Boosted — Rocket League, played at full throttle.">
+  <title>Team Boosted | Rocket League</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@500;600;700;800;900&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #080a0d;
+      --panel: #11151b;
+      --white: #f5f7fa;
+      --muted: #a6adb8;
+      --accent: #ff6b24;
+      --line: rgba(255,255,255,.13);
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body {
+      background: var(--bg);
+      color: var(--white);
+      font-family: Inter, Arial, sans-serif;
+      line-height: 1.6;
+    }
+    a { color: inherit; text-decoration: none; }
+    .topbar {
+      position: absolute; z-index: 5; top: 0; left: 0; width: 100%;
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 22px 7%;
+      border-bottom: 1px solid rgba(255,255,255,.12);
+      background: linear-gradient(180deg, rgba(0,0,0,.55), transparent);
+    }
+    .brand { display: flex; align-items: center; gap: 12px; font-weight: 800; letter-spacing: 2px; }
+    .brand img { width: 42px; height: 42px; object-fit: contain; background: white; border-radius: 5px; }
+    .brand span { font-family: "Barlow Condensed", sans-serif; font-size: 24px; text-transform: uppercase; }
+    nav { display: flex; gap: 30px; align-items: center; }
+    nav a { color: #e1e5eb; font-size: 12px; font-weight: 700; letter-spacing: 1.5px; text-transform: uppercase; transition: color .2s; }
+    nav a:hover { color: var(--accent); }
+    .hero {
+      min-height: 760px; height: 100vh; max-height: 960px; position: relative;
+      display: flex; align-items: center; overflow: hidden;
+      background:
+        linear-gradient(90deg, rgba(4,6,9,.94) 0%, rgba(4,6,9,.72) 43%, rgba(4,6,9,.15) 100%),
+        linear-gradient(0deg, var(--bg) 0%, transparent 28%),
+        url("assets/rocket-league-bg.jpg") center/cover no-repeat;
+    }
+    .hero::after { content: ""; position: absolute; inset: 0; background: linear-gradient(115deg, transparent 55%, rgba(255,107,36,.10)); pointer-events: none; }
+    .hero-content { position: relative; z-index: 1; width: min(650px, 86%); margin-left: 10%; padding-top: 65px; }
+    .eyebrow { color: var(--accent); font-size: 11px; font-weight: 800; letter-spacing: 4px; text-transform: uppercase; margin-bottom: 18px; }
+    h1 { font-family: "Barlow Condensed", Impact, sans-serif; font-size: clamp(68px, 11vw, 132px); line-height: .83; letter-spacing: -2px; text-transform: uppercase; font-weight: 900; }
+    h1 span { color: var(--accent); display: block; }
+    .hero p { color: #d0d5dc; max-width: 440px; margin: 28px 0 32px; font-size: 15px; }
+    .actions { display: flex; flex-wrap: wrap; gap: 13px; }
+    .btn { display: inline-flex; align-items: center; justify-content: center; min-height: 48px; padding: 0 25px; font-size: 11px; font-weight: 800; letter-spacing: 1.5px; text-transform: uppercase; border: 1px solid var(--accent); transition: .2s; }
+    .btn.primary { background: var(--accent); color: #111; }
+    .btn.primary:hover { background: #ff854b; border-color: #ff854b; transform: translateY(-2px); }
+    .btn.outline:hover { background: rgba(255,107,36,.13); transform: translateY(-2px); }
+    .scroll-note { position: absolute; z-index: 2; bottom: 35px; left: 7%; color: #c3c8cf; font-size: 10px; letter-spacing: 3px; text-transform: uppercase; }
+    .section { padding: 105px 9%; }
+    .section-head { display: flex; justify-content: space-between; align-items: end; gap: 25px; margin-bottom: 38px; }
+    .kicker { color: var(--accent); font-size: 10px; letter-spacing: 3px; font-weight: 800; text-transform: uppercase; }
+    h2 { font-family: "Barlow Condensed", Impact, sans-serif; font-size: clamp(42px, 6vw, 66px); line-height: .95; text-transform: uppercase; margin-top: 9px; }
+    .section-head p { max-width: 360px; color: var(--muted); font-size: 13px; }
+    .about-grid { display: grid; grid-template-columns: 1.1fr .9fr; gap: 55px; align-items: center; }
+    .about-copy p { color: var(--muted); max-width: 620px; font-size: 14px; margin-top: 18px; }
+    .logo-panel { min-height: 310px; display: grid; place-items: center; background: #f7f7f7; padding: 28px; position: relative; overflow: hidden; }
+    .logo-panel::before { content: ""; position: absolute; width: 230px; height: 230px; border: 1px solid rgba(0,0,0,.08); transform: rotate(45deg); }
+    .logo-panel img { width: min(100%, 340px); max-height: 260px; object-fit: contain; position: relative; }
+    .stats { display: grid; grid-template-columns: repeat(3,1fr); margin-top: 42px; border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); }
+    .stat { padding: 22px 15px 22px 0; }
+    .stat strong { display: block; font-family: "Barlow Condensed", sans-serif; font-size: 34px; line-height: 1; }
+    .stat span { color: var(--muted); font-size: 10px; letter-spacing: 1.5px; text-transform: uppercase; }
+    .dark-section { background: #0d1117; }
+    .cards { display: grid; grid-template-columns: repeat(3,1fr); gap: 18px; }
+    .card { min-height: 220px; padding: 28px; background: var(--panel); border: 1px solid var(--line); position: relative; overflow: hidden; }
+    .card::after { content: ""; position: absolute; width: 110px; height: 110px; border: 17px solid rgba(255,107,36,.08); border-radius: 50%; right: -35px; bottom: -45px; }
+    .card-number { color: var(--accent); font-family: "Barlow Condensed", sans-serif; font-size: 38px; font-weight: 800; }
+    .card h3 { font-family: "Barlow Condensed", sans-serif; font-size: 28px; text-transform: uppercase; margin: 12px 0 7px; }
+    .card p { color: var(--muted); font-size: 13px; max-width: 270px; }
+    .roster-empty { border: 1px dashed rgba(255,255,255,.22); padding: 38px; text-align: center; color: var(--muted); font-size: 13px; }
+    .join { text-align: center; background: linear-gradient(120deg, #17120f, #10141a 65%); }
+    .join h2 { max-width: 700px; margin: 12px auto 16px; }
+    .join p { color: var(--muted); font-size: 14px; max-width: 480px; margin: 0 auto 28px; }
+    footer { display: flex; justify-content: space-between; gap: 20px; padding: 25px 9%; border-top: 1px solid var(--line); color: #858d98; font-size: 10px; letter-spacing: 1.2px; text-transform: uppercase; }
+    footer strong { color: var(--white); }
+    @media (max-width: 760px) {
+      .topbar { padding: 16px 5%; }
+      nav { gap: 13px; } nav a { font-size: 9px; letter-spacing: .7px; }
+      .brand img { width: 34px; height: 34px; } .brand span { font-size: 19px; }
+      .hero { min-height: 690px; background-position: 58% center; }
+      .hero-content { margin-left: 7%; width: 88%; }
+      .section { padding: 75px 7%; }
+      .section-head { display: block; } .section-head p { margin-top: 15px; }
+      .about-grid { grid-template-columns: 1fr; gap: 30px; }
+      .cards { grid-template-columns: 1fr; }
+      .stats { gap: 8px; } .stat strong { font-size: 27px; }
+      footer { padding: 22px 7%; flex-direction: column; }
+    }
+    @media (max-width: 430px) {
+      nav { gap: 9px; } nav a { font-size: 8px; }
+      .brand { gap: 7px; } .brand span { font-size: 16px; letter-spacing: 1px; }
+      .brand img { width: 29px; height: 29px; }
+    }
+  </style>
+</head>
+<body>
+  <header class="topbar">
+    <a class="brand" href="#home">
+      <img src="assets/team-boosted-logo.jpg" alt="Team Boosted logo">
+      <span>Team Boosted</span>
+    </a>
+    <nav>
+      <a href="#about">About</a>
+      <a href="#focus">The Team</a>
+      <a href="#roster">Roster</a>
+      <a href="#join">Join Us</a>
+    </nav>
+  </header>
+
+  <main>
+    <section class="hero" id="home">
+      <div class="hero-content">
+        <div class="eyebrow">Rocket League • Competitive Team</div>
+        <h1>Built to <span>Boost.</span></h1>
+        <p>Fast plays. Clean touches. No wasted chances. Team Boosted is here to compete, improve and make every match count.</p>
+        <div class="actions">
+          <a class="btn primary" href="#roster">Meet the team</a>
+          <a class="btn outline" href="#join">Get in touch</a>
+        </div>
+      </div>
+      <div class="scroll-note">Full throttle // Team Boosted</div>
+    </section>
+
+    <section class="section" id="about">
+      <div class="about-grid">
+        <div class="about-copy">
+          <div class="kicker">Who we are</div>
+          <h2>More than<br>just a team.</h2>
+          <p>Team Boosted is a Rocket League team built around teamwork, consistency and the drive to get better. From ranked sessions to competitive matches, we keep pushing our game and backing each other up.</p>
+          <div class="stats">
+            <div class="stat"><strong>RL</strong><span>Our game</span></div>
+            <div class="stat"><strong>100%</strong><span>Team effort</span></div>
+            <div class="stat"><strong>24/7</strong><span>Improving</span></div>
+          </div>
+        </div>
+        <div class="logo-panel">
+          <img src="assets/team-boosted-logo.jpg" alt="Team Boosted official logo">
+        </div>
+      </div>
+    </section>
+
+    <section class="section dark-section" id="focus">
+      <div class="section-head">
+        <div><div class="kicker">What we bring</div><h2>Our game plan.</h2></div>
+        <p>We focus on the details that make the difference when the lobby gets competitive.</p>
+      </div>
+      <div class="cards">
+        <article class="card"><div class="card-number">01</div><h3>Team Play</h3><p>Smart rotations, clear comms and trusting your teammates.</p></article>
+        <article class="card"><div class="card-number">02</div><h3>Consistency</h3><p>Showing up, putting in the hours and learning from every game.</p></article>
+        <article class="card"><div class="card-number">03</div><h3>Competition</h3><p>Playing to win while keeping the standard high every match.</p></article>
+      </div>
+    </section>
+
+    <section class="section" id="roster">
+      <div class="section-head">
+        <div><div class="kicker">The lineup</div><h2>Meet the roster.</h2></div>
+        <p>Our players. Our standard. Add your active lineup here when you're ready.</p>
+      </div>
+      <div class="roster-empty">Roster announcements coming soon.</div>
+    </section>
+
+    <section class="section join" id="join">
+      <div class="kicker">Want to run with us?</div>
+      <h2>Make your next move count.</h2>
+      <p>Interested in joining Team Boosted or setting up a match? Reach out through our socials and keep an eye out for team updates.</p>
+      <a class="btn primary" href="mailto:teamboosted@example.com">Contact the team</a>
+    </section>
+  </main>
+
+  <footer>
+    <span>© 2026 <strong>Team Boosted</strong></span>
+    <span>Rocket League // Built to Boost</span>
+  </footer>
+</body>
+</html>
